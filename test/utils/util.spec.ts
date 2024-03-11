@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { generateId } from '@/utils'
+import { describe, it, expect } from 'vitest';
+import { generateId } from '@/utils';
 
 describe('utils/util', () => {
   it('generateId', () => {
@@ -8,5 +8,5 @@ describe('utils/util', () => {
     expect(id1).toMatch(/^test-\d+-\d+$/);
     expect(id2).toMatch(/^test-\d+-\d+$/);
     expect(id1).not.toBe(id2);
-  })
+  });
 });

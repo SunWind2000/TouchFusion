@@ -7,21 +7,21 @@ import { isObject, isArray, isFunction } from '@/utils';
  * @param context 
  * @returns 
  */
-export const each = (
-  object: Record<string, unknown> | unknown[], 
-  iterator: (...args: unknown[]) => unknown,
-  context?: Record<string, unknown>
+export const each = <T, K extends keyof T>(
+  object: T, 
+  iterator: (item?: unknown, key?: K, obj?: T) => unknown,
+  context?: any
 ) => {
   if (!isObject(object) && !isArray(object)) {
     return;
   }
 
   if (isArray(object)) {
-    object.forEach(iterator, context);
+    object.forEach(iterator as (value: unknown, index: number, array: unknown[]) => void, context);
   } else {
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
-        iterator.call(context, object[key], key, object);
+        iterator.call(context, object[key], key as K, object);
       }
     }
   }

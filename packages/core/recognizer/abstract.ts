@@ -114,24 +114,11 @@ export abstract class Recognizer implements IRecognizer {
   }
 
   private emit(data: Input) {
-    const emit = (event: string) => {
+    const emit = (event: RECOGNIZER_TYPE) => {
       this.manager?.emit(event, data);
     };
-    const state = stateStr(this._state);
-
-    if (this._state < RECOGNIZER_STATE.Ended) {
-      emit(this.type + state);
-    }
 
     emit(this.type);
-
-    if (data.additionalEvent) {
-      emit(data.additionalEvent);
-    }
-
-    if (this._state >= RECOGNIZER_STATE.Ended) {
-      emit(this.type + state);
-    }
   }
 
   private tryEmit(data: Input) {
@@ -187,22 +174,3 @@ export abstract class Recognizer implements IRecognizer {
     return otherRecognizer;
   }
 }
-
-const stateStr = (state: RECOGNIZER_STATE) => {
-  switch (state) {
-    case RECOGNIZER_STATE.Possible:
-      return 'Possible';
-    case RECOGNIZER_STATE.Began:
-      return 'Began';
-    case RECOGNIZER_STATE.Changed:
-      return 'Changed';
-    case RECOGNIZER_STATE.Ended:
-      return 'Ended';
-    case RECOGNIZER_STATE.Canceled:
-      return 'Cancelled';
-    case RECOGNIZER_STATE.Failed:
-      return 'Failed';
-    default:
-      return '';
-  }
-};

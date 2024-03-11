@@ -20,6 +20,6 @@ module.exports = {
     'eol-last': 2, // 文件以单一的换行符结束
     'quotes': ['error', 'single'], // 字符串使用单引号
     'comma-dangle': ['error', 'never'], // 对象字面量项尾不能有逗号
-    'no-explicit-any': 0 // 禁止使用 any
+    '@typescript-eslint/no-explicit-any': 0 // 禁止使用 any
   }
 };

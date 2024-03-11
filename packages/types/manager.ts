@@ -78,7 +78,7 @@ export interface IManager {
    * @param type 手势类型名称. 
    * @param input 手势动作相关信息.
    */
-  emit: (type: string, input: Input) => void;
+  emit: (type: RECOGNIZER_TYPE, input: Input) => void;
   /**
    * @description 识别手势事件.
    * @private
