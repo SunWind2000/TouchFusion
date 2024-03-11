@@ -24,6 +24,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
+    "vite-env.d.ts",
     "packages"
   ],
   "exclude": []

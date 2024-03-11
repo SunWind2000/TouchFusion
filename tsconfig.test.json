@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.app.json",
+  "include": [
+    "packages",
+    "test",
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "types": ["node",  "jsdom"]
+  }
+}

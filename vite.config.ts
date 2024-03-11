@@ -1,7 +1,7 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig } from 'vite'
-import dts from 'vite-plugin-dts'
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   base: './',
@@ -19,4 +19,4 @@ export default defineConfig({
       fileName: (format) => `touch-fusion.${format}.js`
     }
   }
-})
+});
