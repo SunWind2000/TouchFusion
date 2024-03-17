@@ -6,7 +6,7 @@ import {
 import { TouchAction } from '@/core/touch-action';
 import { Recognizer } from '@/core/recognizer';
 
-import type { IManager, IManagerSession, Input } from '@/types';
+import type { IManager, IManagerSession, InputData } from '@/types';
 import type { ManagerOptions } from '@/constants';
 
 export class Manager implements IManager {
@@ -15,7 +15,7 @@ export class Manager implements IManager {
   private _recognizers: Recognizer[];
   private _session: IManagerSession;
   private _touchAction: TouchAction;
-  private handlers: Record<RECOGNIZER_TYPE, (data: Input) => unknown>;
+  private handlers: Record<RECOGNIZER_TYPE, (data: InputData) => unknown>;
   
   constructor(element: HTMLElement, options: ManagerOptions) {
     this._element = element;
@@ -27,7 +27,7 @@ export class Manager implements IManager {
 
     this._session = {} as IManagerSession;
 
-    this.handlers = {} as Record<RECOGNIZER_TYPE, (data: Input) => unknown>;
+    this.handlers = {} as Record<RECOGNIZER_TYPE, (data: InputData) => unknown>;
   }
 
   get element(): HTMLElement {
@@ -73,7 +73,7 @@ export class Manager implements IManager {
     }
   }
 
-  public on(recognizer: RECOGNIZER_TYPE[], handler: (data: Input) => unknown): void {
+  public on(recognizer: RECOGNIZER_TYPE[], handler: (data: InputData) => unknown): void {
     recognizer.forEach((item) => {
       this.handlers[item] = handler;
     });
@@ -88,10 +88,10 @@ export class Manager implements IManager {
   public destroy(): void {  
     this._recognizers = [];
     this._session = {} as IManagerSession;
-    this.handlers = {} as Record<RECOGNIZER_TYPE, (data: Input) => unknown>;
+    this.handlers = {} as Record<RECOGNIZER_TYPE, (data: InputData) => unknown>;
   }
 
-  public recognize(input: Input): void {
+  public recognize(input: InputData): void {
     this._recognizers.forEach((item) => {
       if (item.type === input.type) {
         const handler = this.handlers[item.type];
@@ -102,10 +102,14 @@ export class Manager implements IManager {
     });
   }
 
-  public emit(type: RECOGNIZER_TYPE, input: Input): void {
+  public emit(type: RECOGNIZER_TYPE, input: InputData): void {
     const handler = this.handlers[type];
     if (handler) {
       handler(input);
     }
+  }
+
+  public clearSession(): void {
+    this._session = {} as IManagerSession;
   }
 }

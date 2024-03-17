@@ -2,7 +2,7 @@ import { isBoolean } from '@/utils';
 import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from '@/constants';
 
 import type { IActions } from '@/constants';
-import type { IManager, IRecognizer, Input } from '@/types';
+import type { IManager, IRecognizer, InputData } from '@/types';
 
 export class TouchAction {
   private manager: IManager;
@@ -55,7 +55,7 @@ export class TouchAction {
    * @description prevent the browser default actions
    * @param input input of the recognizer
    */
-  public preventDefault(input: Input) {
+  public preventDefault(input: InputData) {
     const { srcEvent } = input;
     const direction = input.offsetDirection;
 

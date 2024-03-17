@@ -1,15 +1,22 @@
 import type { ManagerOptions, RECOGNIZER_TYPE, STOP_TYPE } from '@/constants';
-import type { Input } from './input';
+import type { InputData, SimpleInputData } from './input';
 import type { Recognizer } from '@/core/recognizer';
 import type { TouchAction } from '@/core/touch-action';
+import type { Point2D } from './base';
 
 export interface IManagerSession {
   prevented: boolean;
   stopped: STOP_TYPE;
   curRecognizer: Recognizer | null;
+  prevInput: InputData | null;
+  prevDelta: Point2D | null;
+  offsetDelta: Point2D | null;
+  firstMultiple: SimpleInputData | null;
+  firstInput: SimpleInputData | null;
+  lastInterval: InputData | null;
 }
 
-type TouchActionCallback = (input: Input) => unknown;
+type TouchActionCallback = (input: InputData) => unknown;
 
 /**
  * @description Manager interface
@@ -78,15 +85,19 @@ export interface IManager {
    * @param type 手势类型名称. 
    * @param input 手势动作相关信息.
    */
-  emit: (type: RECOGNIZER_TYPE, input: Input) => void;
+  emit: (type: RECOGNIZER_TYPE, input: InputData) => void;
   /**
    * @description 识别手势事件.
    * @private
    * @param input 手势动作相关信息.
    */
-  recognize: (input: Input) => void;
+  recognize: (input: InputData) => void;
   /**
    * @description 销毁事件实例.
    */
   destroy: () => void
+  /**
+   * @description 清除事件状态.
+   */
+  clearSession: () => void;
 }

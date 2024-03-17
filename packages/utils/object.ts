@@ -56,3 +56,39 @@ export const invokeArrayArg = <
   );
   return true;
 };
+
+/**
+ * unique array with objects based on a key (like 'id') or just by the array's value
+ * @param src [{id:1},{id:2},{id:1}]
+ * @param key
+ * @param sort
+ * @returns [{id:1},{id:2}]
+ */
+export const uniqueArray = <T extends Record<string, any> | any>(
+  src: T[],
+  key?: string,
+  sort = false
+) => {
+  const result: T[] = [];
+  const values: unknown[] = [];
+
+  for (let i = 0; i < src.length; i++) {
+    const val = key ? src[i][key as keyof typeof src[number]] : src[i];
+    if (values.indexOf(val) === -1) {
+      result.push(src[i]);
+    }
+    values[i] = val;
+  }
+
+  if (sort) {
+    if (!key) {
+      result.sort();
+    } else {
+      result.sort((a, b) => {
+        return a[key as keyof typeof a] > b[key as keyof typeof b] ? 1 : -1;
+      });
+    }
+  }
+
+  return result;
+};

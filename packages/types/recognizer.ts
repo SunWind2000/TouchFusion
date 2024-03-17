@@ -4,7 +4,7 @@ import type {
   IActions, 
   RECOGNIZER_STATE 
 } from '@/constants';
-import type { Input } from '@/types';
+import type { InputData } from '@/types';
 import type { Recognizer } from '@/core/recognizer';
 
 export interface IRecognizer {
@@ -19,7 +19,7 @@ export interface IRecognizer {
   dropRecognizeWith: (recognizer: Recognizer | Recognizer[]) => Recognizer;
   requireFailure: (recognizer: Recognizer | Recognizer[]) => Recognizer;
   dropRequireFailure: (recognizer: Recognizer | Recognizer[]) => Recognizer;
-  recognize: (data: Input) => void;
+  recognize: (data: InputData) => void;
   reset: () => void;
-  process: (inputData: Input) => RECOGNIZER_STATE;
+  process: (inputData: InputData) => RECOGNIZER_STATE;
 }

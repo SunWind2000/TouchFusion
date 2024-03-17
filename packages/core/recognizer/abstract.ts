@@ -1,7 +1,7 @@
 import { RECOGNIZER_TYPE, RECOGNIZER_STATE } from '@/constants';
 import { generateId, invokeArrayArg, isArray } from '@/utils';
 
-import type { IManager, IRecognizer, Input } from '@/types';
+import type { IManager, IRecognizer, InputData } from '@/types';
 import type { IActions, RecognizerOptions } from '@/constants';
 
 export abstract class Recognizer implements IRecognizer {
@@ -113,7 +113,7 @@ export abstract class Recognizer implements IRecognizer {
     return this;
   }
 
-  private emit(data: Input) {
+  private emit(data: InputData) {
     const emit = (event: RECOGNIZER_TYPE) => {
       this.manager?.emit(event, data);
     };
@@ -121,7 +121,7 @@ export abstract class Recognizer implements IRecognizer {
     emit(this.type);
   }
 
-  private tryEmit(data: Input) {
+  private tryEmit(data: InputData) {
     if (this.canEmit()) {
       this.emit(data);
     }
@@ -140,7 +140,7 @@ export abstract class Recognizer implements IRecognizer {
     return true;
   }
 
-  public recognize(data: Input) {
+  public recognize(data: InputData) {
     const dataClone = { ...data };
     if (!this._options.enable) {
       this.reset();
@@ -165,7 +165,7 @@ export abstract class Recognizer implements IRecognizer {
 
   public abstract reset(): void;
 
-  public abstract process(inputData: Input): RECOGNIZER_STATE;
+  public abstract process(inputData: InputData): RECOGNIZER_STATE;
 
   private getRecognizerByNameIfManager(otherRecognizer: Recognizer, recognizer: Recognizer) {
     if (recognizer.manager) {

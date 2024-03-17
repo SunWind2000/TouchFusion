@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { each, invokeArrayArg } from '@/utils';
+import { each, invokeArrayArg, uniqueArray } from '@/utils';
 
 describe('utils/object', () => {
   it('each', () => {
@@ -44,5 +44,11 @@ describe('utils/object', () => {
     expect(context.fn).toHaveBeenNthCalledWith(2, 2, 1, arr);
     expect(context.fn).toHaveBeenNthCalledWith(3, 3, 2, arr);
     expect(invokeArrayArg(arr, 'fn', context)).toBe(true);
+  });
+
+  it('uniqueArray', () => {
+    const src = [{ id: 1 }, { id: 2 }, { id: 1 }];
+    expect(uniqueArray(src, 'id')).toEqual([{ id: 1 }, { id: 2 }]);
+    expect(uniqueArray([1, 2, 1])).toEqual([1, 2]);
   });
 });

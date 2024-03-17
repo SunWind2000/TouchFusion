@@ -25,3 +25,5 @@ export enum INPUT_TYPE {
   Pen = 'pen',
   Kinect = 'kinect'
 }
+
+export const COMPUTE_INTERVAL = 25;
