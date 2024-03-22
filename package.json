@@ -3,9 +3,17 @@
   "private": false,
   "version": "0.0.1",
   "type": "module",
+  "main": "lib/touch-fusion.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "package.json",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "scripts": {
-    "dev": "vite",
-    "lib": "tsc && vite build",
+    "dev": "vite --emptyOutDir --source-map --watch",
+    "lib": "tsc && vite build --emptyOutDir --minify",
     "lint": "eslint --ext .ts --ignore-path .eslintignore .",
     "test": "vitest",
     "release:patch": "standard-version --release-as patch",

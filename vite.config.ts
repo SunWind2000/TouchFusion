@@ -14,9 +14,9 @@ export default defineConfig({
   build: {
     outDir: 'lib',
     lib: {
-      entry: 'src/index.ts',
+      entry: 'packages/index.ts',
       name: 'TouchFusion',
-      fileName: (format) => `touch-fusion.${format}.js`
+      fileName: 'touch-fusion'
     }
   }
 });
