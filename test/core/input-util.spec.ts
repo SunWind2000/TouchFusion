@@ -20,9 +20,7 @@ describe('InputUtil', () => {
   });
 
   it('getDirection', () => {
-    const p1 = { x: 0, y: 0 };
-    const p2 = { x: 0, y: 1 };
-    expect(InputUtil.getDirection(p1, p2)).toBe(DIRECTION.Down);
+    expect(InputUtil.getDirection(10, 20)).toBe(DIRECTION.Down);
   });
 
   it('getCenter', () => {
@@ -43,7 +41,7 @@ describe('InputUtil', () => {
   });
 
   it('getVelocity', () => {
-    expect(InputUtil.getVelocity(1000, 100)).toBe(0.1);
+    expect(InputUtil.getVelocity(1000, 100, 100)).toEqual({x: 0.1, y: 0.1});
   });
 
 });

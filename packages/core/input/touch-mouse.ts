@@ -1,9 +1,11 @@
 import { INPUT_STATE, INPUT_TYPE} from '@/constants';
 import { MouseInput } from './mouse';
 import { TouchInput } from './touch';
+import { AbstractInput } from './abstract';
 
 import type { Manager } from '@/manager';
 import type { InputData, Point2D } from '@/types';
+import type { InputCallback } from './abstract';
 
 const DEDUP_TIMEOUT = 2500;
 const DEDUP_DISTANCE = 25;
@@ -14,14 +16,16 @@ const DEDUP_DISTANCE = 25;
  * Touch has a higher priority then mouse, and while touching no mouse events are allowed.
  * This because touch devices also emit mouse events while doing a touch.
  */
-export class TouchMouseInput {
+export class TouchMouseInput extends AbstractInput {
 
   private _primaryTouch: number | null;
   private _lastTouches: Point2D[];
   private _mouse: MouseInput;
   private _touch: TouchInput;
 
-  constructor(manager: Manager) {
+  constructor(manager: Manager, callback: InputCallback) {
+
+    super(manager, callback);
 
     this._mouse = new MouseInput(manager, this.handler);
     this._touch = new TouchInput(manager, this.handler);

@@ -114,6 +114,10 @@ export interface InputData {
    * 是否最后一次触发.
    */
   isFinal?: boolean;
+  /**
+   * 是否阻止默认事件.
+   */
+  preventDefault?: () => void;
 }
 
 export type SimpleInputData = Pick<

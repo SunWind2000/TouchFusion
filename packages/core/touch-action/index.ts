@@ -60,7 +60,7 @@ export class TouchAction {
     const direction = input.offsetDirection;
 
     if (this.manager.session.prevented) {
-      srcEvent.preventDefault();
+      srcEvent!.preventDefault();
       return;
     }
 
@@ -69,9 +69,9 @@ export class TouchAction {
     const hasPanY = this.actions.includes('pan-y');
 
     if (hasNone) {
-      const isTapPointer = input.pointers.length === 1;
-      const isTapMovement = input.distance < 2;
-      const isTapTouchTime = input.deltaTime < 250;
+      const isTapPointer = input.pointers!.length === 1;
+      const isTapMovement = input.distance! < 2;
+      const isTapTouchTime = input.deltaTime! < 250;
 
       if (isTapPointer && isTapMovement && isTapTouchTime) {
         return;
@@ -87,7 +87,7 @@ export class TouchAction {
       (hasPanX && direction === DIRECTION_HORIZONTAL) ||
       (hasPanY && direction === DIRECTION_VERTICAL)
     ) {
-      return this.preventSrc(srcEvent);
+      return this.preventSrc(srcEvent!);
     }
   }
 

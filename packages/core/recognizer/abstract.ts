@@ -5,6 +5,7 @@ import type { IManager, IRecognizer, InputData } from '@/types';
 import type { IActions, RecognizerOptions } from '@/constants';
 
 export abstract class Recognizer implements IRecognizer {
+  protected abstract _type: RECOGNIZER_TYPE;
   protected manager: IManager | null;
   protected _id: string;
   protected _state: RECOGNIZER_STATE;
@@ -24,11 +25,15 @@ export abstract class Recognizer implements IRecognizer {
   }
 
   get type(): RECOGNIZER_TYPE {
-    return this.type;
+    return this._type;
   }
 
   get id(): string {
     return this._id;
+  }
+
+  get state(): RECOGNIZER_STATE {
+    return this._state;
   }
 
   get options(): RecognizerOptions {
@@ -121,7 +126,7 @@ export abstract class Recognizer implements IRecognizer {
     emit(this.type);
   }
 
-  private tryEmit(data: InputData) {
+  protected tryEmit(data: InputData) {
     if (this.canEmit()) {
       this.emit(data);
     }
