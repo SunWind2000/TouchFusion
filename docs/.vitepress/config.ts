@@ -1,10 +1,17 @@
 import { defineConfig } from 'vitepress'
+import DemoContainer from './components/demo-container'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   base: '/touch-fusion/',
   title: "TouchFusion",
   description: "多端触摸手势识别TS工具库",
+  markdown: {
+    config: (md) => {
+      md.use(DemoContainer);
+    }
+  },
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
