@@ -39,4 +39,8 @@ export interface RecognizerOptions {
    * @description 识别手势的方向.
    */
   direction?: DIRECTION;
+  /**
+   * @description 识别手势的最小时间，单位ms.
+   */
+  time?: number;
 }

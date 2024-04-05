@@ -14,7 +14,7 @@ export interface IRecognizer {
   hasRequireFailures: boolean;
   canRecognizeWith: (otherRecognizer: Recognizer) => boolean;
   set: (options: RecognizerOptions) => void;
-  getTouchAction: () => IActions;
+  getTouchAction: () => IActions[];
   recognizeWith: (recognizer: Recognizer | Recognizer[]) => Recognizer;
   dropRecognizeWith: (recognizer: Recognizer | Recognizer[]) => Recognizer;
   requireFailure: (recognizer: Recognizer | Recognizer[]) => Recognizer;

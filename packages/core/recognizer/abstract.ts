@@ -1,4 +1,4 @@
-import { RECOGNIZER_TYPE, RECOGNIZER_STATE } from '@/constants';
+import { RECOGNIZER_TYPE, RECOGNIZER_STATE, INPUT_STATE } from '@/constants';
 import { generateId, invokeArrayArg, isArray } from '@/utils';
 
 import type { IManager, IRecognizer, InputData } from '@/types';
@@ -7,9 +7,9 @@ import type { IActions, RecognizerOptions } from '@/constants';
 export abstract class Recognizer implements IRecognizer {
   protected abstract _type: RECOGNIZER_TYPE;
   protected manager: IManager | null;
-  protected _id: string;
-  protected _state: RECOGNIZER_STATE;
-  protected _options: RecognizerOptions;
+  private _id: string;
+  private _state: RECOGNIZER_STATE;
+  private _options: RecognizerOptions;
   private simultaneous: Record<string, Recognizer>;
   private requireFails: Recognizer[];
 
@@ -42,6 +42,10 @@ export abstract class Recognizer implements IRecognizer {
 
   get hasRequireFailures(): boolean {
     return this.requireFails.length > 0;
+  }
+
+  set state(state: RECOGNIZER_STATE) {
+    this._state = state;
   }
 
   public set(options: RecognizerOptions) {
@@ -166,7 +170,7 @@ export abstract class Recognizer implements IRecognizer {
     }
   }
 
-  public abstract getTouchAction(): IActions;
+  public abstract getTouchAction(): IActions[];
 
   public abstract reset(): void;
 
@@ -177,5 +181,43 @@ export abstract class Recognizer implements IRecognizer {
       return recognizer.manager.get(otherRecognizer.type);
     }
     return otherRecognizer;
+  }
+}
+
+export abstract class AttrRecognizer extends Recognizer {
+
+  constructor(options: RecognizerOptions) {
+    super(options);
+  }
+
+  public abstract getTouchAction(): IActions[];
+
+  protected attrTest(inputData: InputData): boolean {
+    const { pointers } = this.options;
+    return pointers === 0 || inputData.pointers?.length === pointers;
+  }
+
+  public reset() {
+    this.state = RECOGNIZER_STATE.Possible;
+  }
+
+  public process(inputData: InputData): RECOGNIZER_STATE {
+    const { eventType } = inputData;
+
+    const isRecognized = this.state & (RECOGNIZER_STATE.Began | RECOGNIZER_STATE.Changed);
+    const isValid = this.attrTest(inputData);
+
+    if (isRecognized && (eventType! & INPUT_STATE.Cancel || !isValid)) {
+      return RECOGNIZER_STATE.Canceled;
+    } else if (isRecognized || isValid) {
+      if (eventType! & INPUT_STATE.End) {
+        return RECOGNIZER_STATE.Ended;
+      } else if (!(this.state & RECOGNIZER_STATE.Began)) {
+        return RECOGNIZER_STATE.Began;
+      }
+      return RECOGNIZER_STATE.Changed;
+    }
+
+    return RECOGNIZER_STATE.Failed;
   }
 }
