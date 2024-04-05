@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/touchfusion/',
+  base: '/touch-fusion/',
   title: "TouchFusion",
   description: "多端触摸手势识别TS工具库",
   themeConfig: {
