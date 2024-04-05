@@ -9,8 +9,8 @@ lerna-debug.log*
 
 node_modules
 lib
-dist
 dist-ssr
+docs/.vitepress/cache
 *.local
 
 # Editor directories and files
