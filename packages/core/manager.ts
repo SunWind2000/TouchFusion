@@ -1,14 +1,15 @@
 import {
   DEFAULT_OPTIONS,
   RECOGNIZER_TYPE,
-  STOP_TYPE
+  STOP_TYPE,
+  RECOGNIZER_STATE,
+  ManagerOptions
 } from '@/constants';
 import { TouchAction } from '@/core/touch-action';
 import { Recognizer } from '@/core/recognizer';
 import { createInputInstance } from '@/core/input';
 
 import type { IManager, IManagerSession, InputData } from '@/types';
-import { ManagerOptions, RECOGNIZER_STATE } from '@/constants';
 import type { AbstractInput } from '@/core/input/abstract';
 
 export class Manager implements IManager {

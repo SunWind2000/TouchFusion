@@ -1,7 +1,7 @@
 import { AbstractInput } from './abstract';
 import { INPUT_STATE, INPUT_TYPE } from '@/constants';
 
-import type { Manager } from '@/manager';
+import type { Manager } from '@/core/manager';
 import type { InputCallback } from './abstract';
 
 const POINTER_EVENT_INPUT_MAP = {

@@ -1,7 +1,11 @@
-export * from './constants/index';
-export * from './types/index';
-export * from './utils/index';
-export * from './core/touch-action/index';
-export * from './core/recognizer/index';
-export * from './core/input/index';
-export * from './manager.ts';
+import * as Constants from './constants/index';
+import * as Types from './types/index';
+import * as Utils from './utils/index';
+import * as Core from './core/index';
+
+export default {
+  Constants,
+  Types,
+  Utils,
+  Core
+};

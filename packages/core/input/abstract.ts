@@ -1,6 +1,6 @@
 import { addEventListener, removeEventListener } from '@/utils';
 
-import type { Manager } from '@/manager';
+import type { Manager } from '@/core/manager';
 import type { InputData } from '@/types';
 import type { INPUT_STATE } from '@/constants';
 

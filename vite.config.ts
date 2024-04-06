@@ -2,10 +2,14 @@ import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import genDevConfigPlugin from './plugins/vite-plugin-gen-dev-config';
 
 export default defineConfig({
   base: './',
-  plugins: [ dts({ include: './packages' }) ],
+  plugins: [
+    dts({ include: './packages' }),
+    genDevConfigPlugin()
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./packages', import.meta.url))

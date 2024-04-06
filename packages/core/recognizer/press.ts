@@ -4,10 +4,10 @@ import { INPUT_STATE, RECOGNIZER_STATE, RECOGNIZER_TYPE } from '@/constants';
 import type { IActions, RecognizerOptions } from '@/constants';
 import type { InputData } from '@/types';
 
-type PressRecognizerOptions  = Pick<
+type PressRecognizerOptions  = Partial<Pick<
   RecognizerOptions, 
   'threshold' | 'pointers' | 'time'
->;
+>>;
 
 export class PressRecognizer extends Recognizer {
 

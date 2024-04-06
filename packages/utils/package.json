@@ -1,0 +1,6 @@
+{
+  "name": "@touch-fusion/utils",
+  "private": true,
+  "license": "MIT",
+  "main": "index.ts"
+}

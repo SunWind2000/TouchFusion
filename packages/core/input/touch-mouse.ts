@@ -3,7 +3,7 @@ import { MouseInput } from './mouse';
 import { TouchInput } from './touch';
 import { AbstractInput } from './abstract';
 
-import type { Manager } from '@/manager';
+import type { Manager } from '@/core/manager';
 import type { InputData, Point2D } from '@/types';
 import type { InputCallback } from './abstract';
 

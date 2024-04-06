@@ -2,7 +2,7 @@ import { AbstractInput } from './abstract';
 import { INPUT_STATE, INPUT_TYPE } from '@/constants';
 import { uniqueArray } from '@/utils';
 
-import type { Manager } from '@/manager';
+import type { Manager } from '@/core/manager';
 import type { InputCallback } from './abstract';
 
 const SINGLE_TOUCH_INPUT_MAP = {

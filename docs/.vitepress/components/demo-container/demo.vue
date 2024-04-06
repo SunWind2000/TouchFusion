@@ -20,8 +20,6 @@ const modules = import.meta.glob('../../../**/*.vue')
 const exampleComponent = props.codePath && modules[props.codePath]
   ? defineAsyncComponent(modules[props.codePath])
   : null;
-console.log(modules, props.codePath);
-console.log('exampleComponent:', exampleComponent);
 
 const isHover = ref(false);
 const isExpand = ref(false);

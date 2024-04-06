@@ -11,14 +11,21 @@
     "README.md",
     "CHANGELOG.md"
   ],
+  "workspaces": [
+    "packages/*",
+    "docs"
+  ],
   "scripts": {
-    "dev": "vite --emptyOutDir --source-map --watch",
-    "lib": "tsc && vite build --emptyOutDir --minify",
+    "dev": "rm -rf temp && mkdir temp && tsc && vite build --emptyOutDir --watch --mode development",
+    "lib": "rm -rf temp && mkdir temp && tsc && vite build --emptyOutDir --mode production",
     "lint": "eslint --ext .ts --ignore-path .eslintignore .",
     "test": "vitest",
     "release:patch": "standard-version --release-as patch",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major"
+  },
+  "dependencies": {
+    "@touch-fusion/lib": "^0.0.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.7.2",

@@ -3,7 +3,7 @@ import { hasParentNode } from '@/utils';
 import { DIRECTION, COMPUTE_INTERVAL } from '@/constants';
 import { InputUtil } from './util';
 
-import type { Manager } from '@/manager';
+import type { Manager } from '@/core/manager';
 import type { IManagerSession, InputData, Point2D, SimpleInputData } from '@/types';
 
 /**
