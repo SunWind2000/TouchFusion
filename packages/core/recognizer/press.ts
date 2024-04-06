@@ -17,14 +17,16 @@ export class PressRecognizer extends Recognizer {
     time: 251
   };
 
-  protected _type = RECOGNIZER_TYPE.Press;
   private _timer: NodeJS.Timeout | null = null;
+
+  private _isRecognized: boolean = false;
 
   constructor(options: PressRecognizerOptions = {}) {
     super({
       ...PressRecognizer.defaults,
       ...options
     });
+    this._type = RECOGNIZER_TYPE.Press;
   }
 
   public getTouchAction(): IActions[] {
@@ -45,6 +47,8 @@ export class PressRecognizer extends Recognizer {
       this.reset();
       this._timer = setTimeout(() => {
         this.state = RECOGNIZER_STATE.Ended;
+        this._isRecognized = true;
+        this.tryEmit(inputData);
       }, this.options.time);
     } else if (inputData.eventType! & INPUT_STATE.End) {
       return RECOGNIZER_STATE.Ended;
@@ -58,5 +62,15 @@ export class PressRecognizer extends Recognizer {
       clearTimeout(this._timer);
     }
     this._timer = null;
+  }
+
+  // 重写Emit方法覆盖抽象类中的方法，在识别器处于非识别中状态时，不会触发Emit
+  protected emit(inputData: InputData) {
+    if (!this._isRecognized) {
+      return;
+    }
+    this._isRecognized = false;
+
+    super.emit(inputData);
   }
 }

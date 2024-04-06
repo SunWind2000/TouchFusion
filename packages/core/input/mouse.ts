@@ -15,7 +15,7 @@ const MOUSE_WINDOW_EVENTS = ['mousemove', 'mouseup'];
 
 export class MouseInput extends AbstractInput {
 
-  private pressed: boolean = false;
+  private _pressed: boolean;
 
   constructor(manager: Manager, callback: InputCallback) {
 
@@ -23,7 +23,8 @@ export class MouseInput extends AbstractInput {
     this.evEl = MOUSE_ELEMENT_EVENTS;
     this.evWin = MOUSE_WINDOW_EVENTS;
 
-    this.pressed = false;
+    this._pressed = false;
+    this.init();
   }
 
   public handler(ev: MouseEvent) {
@@ -34,16 +35,16 @@ export class MouseInput extends AbstractInput {
       eventType === INPUT_STATE.Start &&
       ev.button === 0
     ) {
-      this.pressed = true;
+      this._pressed = true;
     }
 
     // mouse must be down
-    if (!this.pressed) {
+    if (!this._pressed) {
       return;
     }
 
     if (eventType === INPUT_STATE.End) {
-      this.pressed = false;
+      this._pressed = false;
     }
 
     this.callback(this.manager, eventType, {

@@ -47,13 +47,11 @@ export abstract class AbstractInput {
         this.handler(ev);
       }
     };
-
-    this.init();
   }
 
   public abstract handler(...args: any[]): void;
 
-  private init() {
+  public init() {
     this._evEl.length !== 0 && addEventListener(this.el, this._evEl, this.domHandler);
     this._evTarget.length !== 0 && this.target && addEventListener(this.target, this._evTarget, this.domHandler);
     this._evWin.length !== 0 && addEventListener(window, this._evWin, this.domHandler);

@@ -25,6 +25,8 @@ export class TouchInput extends AbstractInput {
 
     this.evTarget = TOUCH_TARGET_EVENTS;
     this.targetIds = {};
+
+    this.init();
   }
 
   public handler(ev: TouchEvent) {

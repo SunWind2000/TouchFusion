@@ -15,9 +15,10 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/quick-start' },
-      { text: 'Development', link: '/development/'}
+      { text: '首页', link: '/' },
+      { text: '使用指南', link: '/guide/quick-start' },
+      { text: '开发指南', link: '/development/'},
+      { text: '更新日志', link: '/development/changelog'}
     ],
 
     sidebar: [
@@ -41,7 +42,7 @@ export default defineConfig({
         ]
       },
       {
-        text: '常量说明',
+        text: '其他',
         collapsed: false,
         items: [
           { text: '常量说明', link: '/guide/constants' },

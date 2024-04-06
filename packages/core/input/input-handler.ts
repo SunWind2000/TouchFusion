@@ -1,6 +1,6 @@
 import { INPUT_STATE, RECOGNIZER_TYPE } from '@/constants';
 import { hasParentNode } from '@/utils';
-import { DIRECTION, COMPUTE_INTERVAL } from '@/constants';
+import { COMPUTE_INTERVAL } from '@/constants';
 import { InputUtil } from './util';
 
 import type { Manager } from '@/core/manager';
@@ -35,7 +35,7 @@ export const inputHandler = (
 
   _computeInputData(manager, eventData);
 
-  manager.emit('touch-fusion.input' as RECOGNIZER_TYPE, eventData);
+  manager.emit(RECOGNIZER_TYPE.Secret, eventData);
   manager.recognize(eventData);
   manager.session.prevInput = eventData;
 };
@@ -114,8 +114,8 @@ const _simpleCloneInputData = (inputData: InputData): SimpleInputData => {
     pointers,
     timestamp: Date.now(),
     center: InputUtil.getCenter(pointers),
-    deltaX: inputData.deltaX,
-    deltaY: inputData.deltaY
+    deltaX: inputData.deltaX || 0,
+    deltaY: inputData.deltaY || 0
   };
 };
 
@@ -130,12 +130,12 @@ const _computeDeltaXY = (session: IManagerSession, inputData: InputData) => {
       x: prevInput.deltaX || 0,
       y: prevInput.deltaY || 0
     };
-  }
 
-  offset = session.offsetDelta = {
-    x: center.x,
-    y: center.y
-  };
+    offset = session.offsetDelta = {
+      x: center.x,
+      y: center.y
+    };
+  }
 
   inputData.deltaX = prevDelta.x + (center.x - offset.x);
   inputData.deltaY = prevDelta.y + (center.y - offset.y);
@@ -144,12 +144,15 @@ const _computeDeltaXY = (session: IManagerSession, inputData: InputData) => {
 const _computeIntervalInputData = (session: IManagerSession, inputData: InputData) => {
   const last = session.lastInterval || inputData;
   const deltaTime = inputData.timestamp! - last.timestamp!;
-  let velocity = 0;
-  let velocityX = 0;
-  let velocityY = 0;
-  let direction = DIRECTION.None;
+  let velocity;
+  let velocityX;
+  let velocityY;
+  let direction;
 
-  if (inputData.eventType !== INPUT_STATE.Cancel && deltaTime > COMPUTE_INTERVAL) {
+  if (
+    inputData.eventType !== INPUT_STATE.Cancel &&
+    (deltaTime > COMPUTE_INTERVAL || last.velocity === undefined)
+  ) {
     const deltaX = inputData.deltaX! - last.deltaX!;
     const deltaY = inputData.deltaY! - last.deltaY!;
     const v = InputUtil.getVelocity(deltaTime, deltaX, deltaY);

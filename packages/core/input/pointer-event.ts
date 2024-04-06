@@ -20,6 +20,7 @@ export class PointerEventInput extends AbstractInput {
       super(manager, callback);
       this.evEl = POINTER_ELEMENT_EVENTS;
       this.evWin = POINTER_WINDOW_EVENTS;
+      this.init();
     }
   
     public handler(ev: PointerEvent) {

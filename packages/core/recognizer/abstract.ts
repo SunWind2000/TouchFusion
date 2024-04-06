@@ -5,8 +5,8 @@ import type { IManager, IRecognizer, InputData } from '@/types';
 import type { IActions, RecognizerOptions } from '@/constants';
 
 export abstract class Recognizer implements IRecognizer {
-  protected abstract _type: RECOGNIZER_TYPE;
-  protected manager: IManager | null;
+  protected _type: RECOGNIZER_TYPE = RECOGNIZER_TYPE.Unknown;
+  protected _manager: IManager | null;
   private _id: string;
   private _state: RECOGNIZER_STATE;
   private _options: RecognizerOptions;
@@ -16,7 +16,7 @@ export abstract class Recognizer implements IRecognizer {
   constructor(options: RecognizerOptions) {
     this._options = { ...options };
     this._id = generateId(this.type);
-    this.manager = null;
+    this._manager = null;
 
     this._options.enable = this._options.enable ?? true;
     this._state = RECOGNIZER_STATE.Possible;
@@ -48,9 +48,13 @@ export abstract class Recognizer implements IRecognizer {
     this._state = state;
   }
 
+  set manager(manager: IManager) {
+    this._manager = manager;
+  }
+
   public set(options: RecognizerOptions) {
     this._options = { ...this._options, ...options };
-    this.manager?.touchAction.update();
+    this._manager?.touchAction.update();
   }
 
   public canRecognizeWith(otherRecognizer: Recognizer): boolean {
@@ -122,12 +126,12 @@ export abstract class Recognizer implements IRecognizer {
     return this;
   }
 
-  private emit(data: InputData) {
+  protected emit(data: InputData) {
     const emit = (event: RECOGNIZER_TYPE) => {
-      this.manager?.emit(event, data);
+      this._manager?.emit(event, data);
     };
 
-    emit(this.type);
+    emit(this._type);
   }
 
   protected tryEmit(data: InputData) {
@@ -137,7 +141,7 @@ export abstract class Recognizer implements IRecognizer {
     this._state = RECOGNIZER_STATE.Failed;
   }
 
-  private canEmit() {
+  protected canEmit() {
     for (const item of this.requireFails) {
       if (
         item._state !== RECOGNIZER_STATE.Ended &&

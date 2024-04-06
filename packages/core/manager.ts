@@ -69,6 +69,7 @@ export class Manager implements IManager {
   }
 
   public add(recognizer: Recognizer): void {
+    recognizer.manager = this;
     this._recognizers.push(recognizer);
   }
 

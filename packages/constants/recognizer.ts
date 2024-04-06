@@ -10,6 +10,14 @@ export enum RECOGNIZER_STATE {
 }
 
 export enum RECOGNIZER_TYPE {
+  /**
+   * @description 内部事件Emit，会对所有的InputData进行广播.
+   */
+  Secret = 'touch-fusion.input',
+  /**
+   * @description 未知识别器，用作识别器抽象类初始值.
+   */
+  Unknown = 'unknown',
   Swipe = 'swipe',
   Pan = 'pan',
   Pinch = 'pinch',
