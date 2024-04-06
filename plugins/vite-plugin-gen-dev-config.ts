@@ -8,7 +8,7 @@ const TEMP_PACKAGE_JSON = './temp/package.json';
 
 const updateLibName = (mode: string = 'production') => {
   console.log('mode: ', mode);
-  const config = mode === 'development' ? packageConfig : prodPackageConfig;
+  const config = packageConfig;
   return {
     ...config,
     version: prodPackageConfig.version

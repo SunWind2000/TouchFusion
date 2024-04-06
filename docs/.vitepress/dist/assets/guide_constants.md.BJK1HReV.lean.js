@@ -1,1 +1,0 @@
-import{_ as t,c as e,o as a}from"./chunks/framework.Degn3S5Q.js";const m=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"guide/constants.md","filePath":"guide/constants.md","lastUpdated":1712323428000}'),s={name:"guide/constants.md"};function n(o,c,r,d,i,p){return a(),e("div")}const f=t(s,[["render",n]]);export{m as __pageData,f as default};
