@@ -4,3 +4,4 @@ export * from './util';
 export * from './object';
 export * from './event-listener';
 export * from './dom';
+export * from './function';

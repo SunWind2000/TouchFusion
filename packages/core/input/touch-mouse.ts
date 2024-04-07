@@ -1,4 +1,5 @@
 import { INPUT_STATE, INPUT_TYPE} from '@/constants';
+import { bindFn } from '@/utils';
 import { MouseInput } from './mouse';
 import { TouchInput } from './touch';
 import { AbstractInput } from './abstract';
@@ -27,8 +28,9 @@ export class TouchMouseInput extends AbstractInput {
 
     super(manager, callback);
 
-    this._mouse = new MouseInput(manager, this.handler);
-    this._touch = new TouchInput(manager, this.handler);
+    const handler = bindFn(this.handler, this);
+    this._mouse = new MouseInput(manager, handler);
+    this._touch = new TouchInput(manager, handler);
 
     this._primaryTouch = null;
     this._lastTouches = [];
@@ -51,7 +53,7 @@ export class TouchMouseInput extends AbstractInput {
     this._touch.destroy();
   }
 
-  private _recordTouches(eventType: INPUT_STATE, eventData: InputData) {
+  public _recordTouches(eventType: INPUT_STATE, eventData: InputData) {
     if (eventType === INPUT_STATE.Start) {
       this._primaryTouch = (eventData.changedPointers as Touch[])[0].identifier;
       this._setLastTouch(eventData);
@@ -60,7 +62,7 @@ export class TouchMouseInput extends AbstractInput {
     }
   }
 
-  private _setLastTouch(eventData: InputData) {
+  public _setLastTouch(eventData: InputData) {
     const touch = (eventData.changedPointers as Touch[])[0];
     if (touch.identifier === this._primaryTouch) {
       const lastTouch = {

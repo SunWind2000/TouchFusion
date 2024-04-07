@@ -9,6 +9,7 @@ export declare class Manager implements IManager {
     private _session;
     private _touchAction;
     private _input;
+    private _oldCssProps;
     private handlers;
     constructor(element: HTMLElement, options?: ManagerOptions);
     get element(): HTMLElement;
@@ -38,4 +39,5 @@ export declare class Manager implements IManager {
      */
     emit(type: RECOGNIZER_TYPE, input: InputData): void;
     clearSession(): void;
+    private _toggleCssProps;
 }

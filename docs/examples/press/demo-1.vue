@@ -12,7 +12,9 @@ import { ElMessage } from 'element-plus';
 const detectRef = ref(null)
 
 onMounted(() => {
-  const manager = new FSTouch.Core.Manager(detectRef.value!)
+  const manager = new FSTouch.Core.Manager(detectRef.value!, {
+    preventDefault: true
+  })
   const recognizer = new FSTouch.Core.Recognizer.PressRecognizer({
     threshold: 5,
     time: 1000

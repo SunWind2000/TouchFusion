@@ -35,6 +35,19 @@ export const inputHandler = (
 
   _computeInputData(manager, eventData);
 
+  // manager.options.preventDefault为true时,阻止默认事件
+  if  (manager.options.preventDefault) {
+    eventData.srcEvent!.preventDefault();
+  }
+  // manager.options.stopPropagation为true时,阻止事件冒泡
+  if (manager.options.stopPropagation) {
+    eventData.srcEvent!.stopPropagation();
+  }
+  // manager,options.stopImmediatePropagation为true时,阻止事件立即停止
+  if (manager.options.stopImmediatePropagation) {
+    eventData.srcEvent!.stopImmediatePropagation();
+  }
+
   manager.emit(RECOGNIZER_TYPE.Secret, eventData);
   manager.recognize(eventData);
   manager.session.prevInput = eventData;

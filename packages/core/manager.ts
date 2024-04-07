@@ -8,22 +8,24 @@ import {
 import { TouchAction } from '@/core/touch-action';
 import { Recognizer } from '@/core/recognizer';
 import { createInputInstance } from '@/core/input';
+import { each } from '@/utils';
 
 import type { IManager, IManagerSession, InputData } from '@/types';
 import type { AbstractInput } from '@/core/input/abstract';
 
 export class Manager implements IManager {
   private _element: HTMLElement;
-  private _options: ManagerOptions;
+  private _options: Required<ManagerOptions>;
   private _recognizers: Recognizer[];
   private _session: IManagerSession;
   private _touchAction: TouchAction;
   private _input: AbstractInput;
+  private _oldCssProps: Record<string, any>;
   private handlers: Record<RECOGNIZER_TYPE, (data: InputData) => unknown>;
   
   constructor(element: HTMLElement, options?: ManagerOptions) {
     this._element = element;
-    this._options = { ...DEFAULT_OPTIONS, ...options };
+    this._options = { ...DEFAULT_OPTIONS, ...options } as Required<ManagerOptions>;
     this._options.inputTarget = options?.inputTarget ?? this._element;
     
     this._recognizers = [];
@@ -34,6 +36,9 @@ export class Manager implements IManager {
     this._session = {} as IManagerSession;
 
     this.handlers = {} as Record<RECOGNIZER_TYPE, (data: InputData) => unknown>;
+
+    this._oldCssProps = {};
+    this._toggleCssProps('add');
   }
 
   get element(): HTMLElement {
@@ -92,7 +97,8 @@ export class Manager implements IManager {
     });
   }
 
-  public destroy(): void {  
+  public destroy(): void { 
+    this._toggleCssProps('remove');
     this._recognizers = [];
     this._input.destroy();
     this._session = {} as IManagerSession;
@@ -159,5 +165,22 @@ export class Manager implements IManager {
 
   public clearSession(): void {
     this._session = {} as IManagerSession;
+  }
+
+  private _toggleCssProps(action: 'add' | 'remove') {
+    if (!this._options.cssProps || !this._element.style) {
+      return;
+    }
+    each(this._options.cssProps, (value, prop) => {
+      if (action === 'add') {
+        this._oldCssProps[prop as any] = this._element.style[prop as keyof CSSStyleDeclaration];
+        this._element.style[prop as any] = value as any;
+      } else {
+        this._element.style[prop as any] = this._oldCssProps[prop as any] || '';
+      }
+    });
+    if (action !== 'add') {
+      this._oldCssProps = {};
+    }
   }
 }
