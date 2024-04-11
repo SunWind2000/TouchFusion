@@ -1,3 +1,16 @@
 .vp-doc table {
   margin: 0;
 }
+
+.gesture-area {
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  background-color: var(--vp-c-brand-2);
+  color: var(--vp-c-gray-1);
+  text-align: center;
+  cursor: pointer;
+  &:active {
+    background-color: var(--vp-c-brand-1);
+  }
+}

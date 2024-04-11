@@ -70,7 +70,7 @@ export interface IManager {
      * @param recognizer 手势类型名称.
      * @param handler 事件触发回调.
      */
-    on: (recognizer: RECOGNIZER_TYPE[], handler: TouchActionCallback) => void;
+    on: (recognizer: RECOGNIZER_TYPE, handler: TouchActionCallback) => void;
     /**
      * @description 取消监听手势事件.
      * @param recognizer 手势类型名称.

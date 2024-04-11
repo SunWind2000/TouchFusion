@@ -29,6 +29,7 @@ export const DEFAULT_OPTIONS: ManagerOptions = {
   stopImmediatePropagation: false,
   inputTarget: null,
   cssProps: {
-    userSelect: 'none'
+    userSelect: 'none',
+    touchAction: 'none'
   }
 };

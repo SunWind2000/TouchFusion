@@ -70,7 +70,8 @@ export class PressRecognizer extends Recognizer {
       return;
     }
     this._isRecognized = false;
-
+    inputData.deltaTime = Date.now() - inputData.timestamp!;
+    inputData.timestamp = Date.now();
     super.emit(inputData);
   }
 }

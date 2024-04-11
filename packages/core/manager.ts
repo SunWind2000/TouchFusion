@@ -85,10 +85,8 @@ export class Manager implements IManager {
     }
   }
 
-  public on(recognizer: RECOGNIZER_TYPE[], handler: (data: InputData) => unknown): void {
-    recognizer.forEach((item) => {
-      this.handlers[item] = handler;
-    });
+  public on(recognizer: RECOGNIZER_TYPE, handler: (data: InputData) => unknown): void {
+    this.handlers[recognizer] = handler;
   }
 
   public off(recognizer: RECOGNIZER_TYPE[]): void {

@@ -22,7 +22,7 @@ export declare class Manager implements IManager {
     get(recognizer: RECOGNIZER_TYPE): Recognizer | null;
     add(recognizer: Recognizer): void;
     remove(recognizer: Recognizer): void;
-    on(recognizer: RECOGNIZER_TYPE[], handler: (data: InputData) => unknown): void;
+    on(recognizer: RECOGNIZER_TYPE, handler: (data: InputData) => unknown): void;
     off(recognizer: RECOGNIZER_TYPE[]): void;
     destroy(): void;
     /**
