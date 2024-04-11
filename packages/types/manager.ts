@@ -1,7 +1,7 @@
 import type { ManagerOptions, RECOGNIZER_TYPE, STOP_TYPE } from '@/constants';
 import type { InputData, SimpleInputData } from './input';
-import type { Recognizer } from '@/core/recognizer';
-import type { TouchAction } from '@/core/touch-action';
+import type { Recognizer } from '@/recognizer';
+import type { TouchAction } from '@/touch-action';
 import type { Point2D } from './base';
 
 export interface IManagerSession {

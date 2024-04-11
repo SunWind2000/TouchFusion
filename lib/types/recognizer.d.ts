@@ -1,6 +1,6 @@
 import type { RECOGNIZER_TYPE, RecognizerOptions, IActions, RECOGNIZER_STATE } from '../constants';
 import type { InputData } from '.';
-import type { Recognizer } from '../core/recognizer';
+import type { Recognizer } from '../recognizer';
 export interface IRecognizer {
     id: string;
     options: RecognizerOptions;

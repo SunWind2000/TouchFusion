@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { InputUtil } from '@/core/input';
+import { InputUtil } from '@/input';
 import { DIRECTION } from '@/constants';
 
 describe('InputUtil', () => {

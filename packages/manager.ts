@@ -5,13 +5,13 @@ import {
   RECOGNIZER_STATE,
   ManagerOptions
 } from '@/constants';
-import { TouchAction } from '@/core/touch-action';
-import { Recognizer } from '@/core/recognizer';
-import { createInputInstance } from '@/core/input';
+import { TouchAction } from '@/touch-action';
+import { Recognizer } from '@/recognizer';
+import { createInputInstance } from '@/input';
 import { each } from '@/utils';
 
 import type { IManager, IManagerSession, InputData } from '@/types';
-import type { AbstractInput } from '@/core/input/abstract';
+import type { AbstractInput } from '@/input/abstract';
 
 export class Manager implements IManager {
   private _element: HTMLElement;

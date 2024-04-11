@@ -5,7 +5,7 @@ import type {
   RECOGNIZER_STATE 
 } from '@/constants';
 import type { InputData } from '@/types';
-import type { Recognizer } from '@/core/recognizer';
+import type { Recognizer } from '@/recognizer';
 
 export interface IRecognizer {
   id: string

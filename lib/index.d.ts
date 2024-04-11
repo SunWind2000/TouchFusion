@@ -1,11 +1,13 @@
 import * as Constants from './constants/index';
 import * as Types from './types/index';
 import * as Utils from './utils/index';
-import * as Core from './core/index';
+import * as Recognizer from './recognizer/index';
+import { Manager } from './manager';
 declare const _default: {
+    Manager: typeof Manager;
     Constants: typeof Constants;
     Types: typeof Types;
     Utils: typeof Utils;
-    Core: typeof Core;
+    Recognizer: typeof Recognizer;
 };
 export default _default;

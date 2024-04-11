@@ -1,7 +1,7 @@
-import { RECOGNIZER_TYPE, ManagerOptions } from '../constants';
+import { RECOGNIZER_TYPE, ManagerOptions } from './constants';
 import { TouchAction } from './touch-action';
 import { Recognizer } from './recognizer';
-import type { IManager, IManagerSession, InputData } from '../types';
+import type { IManager, IManagerSession, InputData } from './types';
 export declare class Manager implements IManager {
     private _element;
     private _options;

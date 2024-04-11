@@ -9,7 +9,7 @@ import {
   SUPPORT_TOUCH
 } from '@/constants';
 
-import type { Manager } from '@/core/manager';
+import type { Manager } from '@/manager';
 
 export const createInputInstance = (manager: Manager) => {
   let Type;

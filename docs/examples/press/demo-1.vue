@@ -14,10 +14,10 @@ const detectRef = ref(null)
 document.oncontextmenu = () => false
 
 onMounted(() => {
-  const manager = new FSTouch.Core.Manager(detectRef.value!, {
+  const manager = new FSTouch.Manager(detectRef.value!, {
     preventDefault: true
   })
-  const recognizer = new FSTouch.Core.Recognizer.PressRecognizer({
+  const recognizer = new FSTouch.Recognizer.PressRecognizer({
     threshold: 20,
     time: 1000
   })
