@@ -9,11 +9,11 @@ import { ref, onMounted } from 'vue';
 import FSTouch from '@touch-fusion/lib';
 import { ElMessage } from 'element-plus';
 
-const detectRef = ref(null)
-// 禁用右键菜单
-document.oncontextmenu = () => false
+const detectRef = ref<HTMLDivElement | null>(null)
 
 onMounted(() => {
+  // 禁用右键菜单
+  detectRef.value!.oncontextmenu = () => false
   const manager = new FSTouch.Manager(detectRef.value!, {
     preventDefault: true
   })
