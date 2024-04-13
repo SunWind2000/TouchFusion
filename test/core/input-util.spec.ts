@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { InputUtil } from '@/input';
-import { DIRECTION } from '@/constants';
+import { InputUtil, DIRECTION } from '@/input';
 
 describe('InputUtil', () => {
   it('should be defined', () => {
