@@ -28,6 +28,12 @@
 
 <demo src="press/demo-1.vue"></demo>
 
+## 多指长按
+
+设置`pointers`属性为2，现在只有当双指长按超过1s后，才会触发消息提示了.
+
+<demo src="press/demo-2.vue"></demo>
+
 ## API
 
 <attr-table :columns="columns" :data="data"></attr-table>
