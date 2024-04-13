@@ -1,7 +1,7 @@
 {
   "name": "touch-fusion",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "main": "lib/touch-fusion.js",
   "types": "lib/index.d.ts",
@@ -16,36 +16,28 @@
     "docs"
   ],
   "scripts": {
-    "dev": "rm -rf temp && mkdir temp && tsc && vite build --emptyOutDir --watch --mode development",
-    "lib": "rm -rf temp && mkdir temp && tsc && vite build --emptyOutDir --mode production",
+    "dev": "vite build --emptyOutDir --watch --mode development",
+    "lib": "vite build --emptyOutDir --mode production",
     "lint": "eslint --ext .ts --ignore-path .eslintignore .",
     "test": "vitest",
     "release:patch": "standard-version --release-as patch",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major"
   },
-  "dependencies": {
-    "@touch-fusion/lib": "^0.0.2"
-  },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.7.2",
     "@tsconfig/node18": "^18.2.2",
     "@types/jsdom": "^21.1.6",
-    "@types/markdown-it": "^13.0.7",
     "@types/node": "^20.11.20",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
-    "element-plus": "^2.6.3",
     "eslint": "^8.57.0",
     "jsdom": "^24.0.0",
-    "markdown-it": "^14.1.0",
-    "shiki": "^1.2.4",
     "standard-version": "^9.5.0",
+    "touch-fusion": "link:packages",
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
     "vite-plugin-dts": "^3.7.3",
-    "vitepress": "^1.0.1",
-    "vitest": "^1.3.1",
-    "vue": "^3.4.21"
+    "vitest": "^1.3.1"
   }
 }

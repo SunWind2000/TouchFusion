@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://gitee.com/sunhy-cn/touch-fusion/compare/v0.0.3...v0.0.4) (2024-04-13)
+
+
+### ✏️ Documentation | 文档
+
+* 增加Changelog文件 ([51ae827](https://gitee.com/sunhy-cn/touch-fusion/commit/51ae82791dd0bc139f22568a3c9827cb04523da0))
+
 ### 0.0.3 (2024-04-11)
 
 
