@@ -1,19 +1,21 @@
-import { RECOGNIZER_TYPE, RECOGNIZER_STATE, INPUT_STATE } from '@/constants';
+import { INPUT_STATE } from '@/input';
+import { RECOGNIZER_TYPE, RECOGNIZER_STATE } from './constants';
 import { generateId, invokeArrayArg, isArray } from '@/utils';
 
-import type { IManager, IRecognizer, InputData } from '@/types';
-import type { IActions, RecognizerOptions } from '@/constants';
+import type { InputData } from '@/input';
+import type { IActions, IManager } from '@/manager';
+import type { IRecognizer, IRecognizerOptions } from './types';
 
 export abstract class Recognizer implements IRecognizer {
   protected _type: RECOGNIZER_TYPE = RECOGNIZER_TYPE.Unknown;
   protected _manager: IManager | null;
   private _id: string;
   private _state: RECOGNIZER_STATE;
-  private _options: RecognizerOptions;
+  private _options: IRecognizerOptions;
   private simultaneous: Record<string, Recognizer>;
   private requireFails: Recognizer[];
 
-  constructor(options: RecognizerOptions) {
+  constructor(options: IRecognizerOptions) {
     this._options = { ...options };
     this._id = generateId(this.type);
     this._manager = null;
@@ -36,7 +38,7 @@ export abstract class Recognizer implements IRecognizer {
     return this._state;
   }
 
-  get options(): RecognizerOptions {
+  get options(): IRecognizerOptions {
     return this._options;
   }
 
@@ -52,9 +54,9 @@ export abstract class Recognizer implements IRecognizer {
     this._manager = manager;
   }
 
-  public set(options: RecognizerOptions) {
+  public set(options: IRecognizerOptions) {
     this._options = { ...this._options, ...options };
-    this._manager?.touchAction.update();
+    // this._manager?.touchAction.update();
   }
 
   public canRecognizeWith(otherRecognizer: Recognizer): boolean {
@@ -190,7 +192,7 @@ export abstract class Recognizer implements IRecognizer {
 
 export abstract class AttrRecognizer extends Recognizer {
 
-  constructor(options: RecognizerOptions) {
+  constructor(options: IRecognizerOptions) {
     super(options);
   }
 

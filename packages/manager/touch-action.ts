@@ -1,14 +1,16 @@
 import { isBoolean } from '@/utils';
-import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from '@/constants';
+import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from '@/input';
 
-import type { IActions } from '@/constants';
-import type { IManager, IRecognizer, InputData } from '@/types';
+import type { IActions } from './types';
+import type { IRecognizer } from '@/recognizer';
+import type { InputData } from '@/input';
+import type { Manager } from './manager';
 
 export class TouchAction {
-  private manager: IManager;
+  private manager: Manager;
   private actions: IActions[];
 
-  constructor(manager: IManager, value: IActions[]) {
+  constructor(manager: Manager, value: IActions[]) {
     this.manager = manager;
     this.actions = [...value];
     this.set(value);

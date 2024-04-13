@@ -1,10 +1,11 @@
-import { INPUT_STATE, RECOGNIZER_TYPE } from '@/constants';
+import { RECOGNIZER_TYPE } from '@/recognizer';
 import { hasParentNode } from '@/utils';
-import { COMPUTE_INTERVAL } from '@/constants';
+import { COMPUTE_INTERVAL, INPUT_STATE } from './constants';
 import { InputUtil } from './util';
 
 import type { Manager } from '@/manager';
-import type { IManagerSession, InputData, Point2D, SimpleInputData } from '@/types';
+import type { IManagerSession } from '@/manager';
+import type { InputData, SimpleInputData, Point2D } from './types';
 
 /**
  * 输入事件处理器.获取各个输入事件的数据,并做统一处理.

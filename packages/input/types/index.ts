@@ -1,5 +1,10 @@
-import type { Point2D } from './base';
-import type { INPUT_STATE, INPUT_TYPE, RECOGNIZER_TYPE } from '@/constants';
+import type { RECOGNIZER_TYPE } from '@/recognizer';
+import type { INPUT_STATE, INPUT_TYPE } from '../constants';
+
+export interface Point2D {
+  x: number;
+  y: number;
+}
 
 export interface InputData {
   /**

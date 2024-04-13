@@ -21,23 +21,23 @@ pnpm install touch-fusion
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import FSTouch from 'touch-fusion';
+import { FsTouchManager, FsTouchRecognizer } from 'touch-fusion';
 
 // 获取元素变量
 const gestureAreaRef = ref<HTMLDivElement | null>(null);
 
-let manager: FSTouch.Manager | null = null
+let manager: FsTouchManager | null = null
 
 // 在界面挂载完成钩子里，绑定识别器和元素
 onMounted(() => {
-  manager = new FSTouch.Manager(gestureAreaRef.value!)
+  manager = new FsTouchManager(gestureAreaRef.value!)
   // 设置手势识别器属性
-  const recognizer = new FSTouch.Recognizer.PressRecognizer({
+  const recognizer = new FsTouchRecognizer.PressRecognizer({
     time: 1500;
   });
   manager.add(recognizer);
   // 监听手势触发，并设置回调函数
-  manager.on(FSTouch.Constants.RECOGNIZER_TYPE.Press, (e) => {
+  manager.on(FsTouchRecognizer.RECOGNIZER_TYPE.Press, (e) => {
     console.log(e.type, e)
   })
 })
@@ -55,25 +55,25 @@ onBeforeUnmount(() => {
 
 ```typescript
 // directives/press.ts
-import FSTouch from 'touch-fusion'
+import { FsTouchManager, FsTouchRecognizer } from 'touch-fusion';
 
 import type { ObjectDirective, DirectiveBinding } from 'vue'
 
 interface CustomElement extends HTMLElement {
-  manager?: FSTouch.Manager
+  manager?: FsTouchManager
 }
 
 const press: ObjectDirective = {
   mounted(el: HTMLElement, binding: DirectiveBinding<(...args: any[]) => any>) {
-    el.manager = new FSTouch.Manager(el)
+    el.manager = new FsTouchManager(el)
 
     // 设置手势识别器属性
-    const recognizer = new FSTouch.Recognizer.PressRecognizer({
+    const recognizer = new FsTouchRecognizer.PressRecognizer({
       time: 1500;
     });
     el.manager.add(recognizer);
     // 监听手势触发，并设置回调函数
-    el.manager.on(FSTouch.Constants.RECOGNIZER_TYPE.Press, binding.value)
+    el.manager.on(FsTouchRecognizer.RECOGNIZER_TYPE.Press, binding.value)
   },
 
   unmount() {

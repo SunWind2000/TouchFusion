@@ -1,37 +1,28 @@
-import {
-  DEFAULT_OPTIONS,
-  RECOGNIZER_TYPE,
-  STOP_TYPE,
-  RECOGNIZER_STATE,
-  ManagerOptions
-} from '@/constants';
-import { TouchAction } from '@/touch-action';
-import { Recognizer } from '@/recognizer';
+import { Recognizer, RECOGNIZER_STATE, RECOGNIZER_TYPE } from '@/recognizer';
 import { createInputInstance } from '@/input';
 import { each } from '@/utils';
+import { DEFAULT_OPTIONS, STOP_TYPE } from './constants';
 
-import type { IManager, IManagerSession, InputData } from '@/types';
-import type { AbstractInput } from '@/input/abstract';
+import type { AbstractInput, InputData } from '@/input';
+import type { IManagerOptions, IManager, IManagerSession } from './types';
 
 export class Manager implements IManager {
   private _element: HTMLElement;
-  private _options: Required<ManagerOptions>;
+  private _options: Required<IManagerOptions>;
   private _recognizers: Recognizer[];
   private _session: IManagerSession;
-  private _touchAction: TouchAction;
   private _input: AbstractInput;
   private _oldCssProps: Record<string, any>;
   private handlers: Record<RECOGNIZER_TYPE, (data: InputData) => unknown>;
   
-  constructor(element: HTMLElement, options?: ManagerOptions) {
+  constructor(element: HTMLElement, options?: IManagerOptions) {
     this._element = element;
-    this._options = { ...DEFAULT_OPTIONS, ...options } as Required<ManagerOptions>;
+    this._options = { ...DEFAULT_OPTIONS, ...options } as Required<IManagerOptions>;
     this._options.inputTarget = options?.inputTarget ?? this._element;
     
     this._recognizers = [];
 
     this._input = createInputInstance(this);
-    this._touchAction = new TouchAction(this, this._options.touchActions!);
 
     this._session = {} as IManagerSession;
 
@@ -45,7 +36,7 @@ export class Manager implements IManager {
     return this._element;
   }
 
-  get options(): ManagerOptions {
+  get options(): IManagerOptions {
     return this._options;
   }
 
@@ -57,15 +48,11 @@ export class Manager implements IManager {
     return this._session;
   }
 
-  get touchAction(): TouchAction {
-    return this._touchAction;
-  }
-
   public stop(force: boolean): void {
     this._session.stopped = force ? STOP_TYPE.ForceStop : STOP_TYPE.Stop;
   }
 
-  public set(options: ManagerOptions): void {
+  public set(options: IManagerOptions): void {
     this._options = { ...this._options, ...options };
   }
 
@@ -113,7 +100,6 @@ export class Manager implements IManager {
     if (this._session.stopped) {
       return;
     }
-    this.touchAction.preventDefault(input);
 
     let { curRecognizer } = this._session;
     if (

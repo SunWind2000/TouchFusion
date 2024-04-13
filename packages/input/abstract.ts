@@ -1,8 +1,8 @@
 import { addEventListener, removeEventListener } from '@/utils';
 
 import type { Manager } from '@/manager';
-import type { InputData } from '@/types';
-import type { INPUT_STATE } from '@/constants';
+import type { InputData } from './types';
+import type { INPUT_STATE } from './constants';
 
 export type InputCallback = (manager: Manager, eventType: INPUT_STATE, input: InputData) => void;
 

@@ -1,6 +1,6 @@
-import { DIRECTION } from '@/constants';
+import { DIRECTION } from './constants';
 
-import type { Point2D } from '@/types';
+import type { Point2D } from './types';
 
 export class InputUtil {
 

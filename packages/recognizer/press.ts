@@ -1,17 +1,19 @@
 import { Recognizer } from './abstract';
-import { INPUT_STATE, RECOGNIZER_STATE, RECOGNIZER_TYPE } from '@/constants';
+import { RECOGNIZER_STATE, RECOGNIZER_TYPE } from './constants';
+import { INPUT_STATE } from '@/input';
 
-import type { IActions, RecognizerOptions } from '@/constants';
-import type { InputData } from '@/types';
+import type { IActions } from '@/manager';
+import type { InputData } from '@/input';
+import type { IRecognizerOptions } from './types';
 
-type PressRecognizerOptions  = Partial<Pick<
-  RecognizerOptions, 
+type PressIRecognizerOptions  = Partial<Pick<
+  IRecognizerOptions, 
   'threshold' | 'pointers' | 'time'
 >>;
 
 export class PressRecognizer extends Recognizer {
 
-  public static readonly defaults: PressRecognizerOptions = {
+  public static readonly defaults: PressIRecognizerOptions = {
     threshold: 9,
     pointers: 1,
     time: 251
@@ -21,7 +23,7 @@ export class PressRecognizer extends Recognizer {
 
   private _isRecognized: boolean = false;
 
-  constructor(options: PressRecognizerOptions = {}) {
+  constructor(options: PressIRecognizerOptions = {}) {
     super({
       ...PressRecognizer.defaults,
       ...options

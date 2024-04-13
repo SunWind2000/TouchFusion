@@ -7,7 +7,7 @@ import {
   SUPPORT_ONLY_TOUCH,
   SUPPORT_POINTER_EVENTS,
   SUPPORT_TOUCH
-} from '@/constants';
+} from './constants';
 
 import type { Manager } from '@/manager';
 
@@ -27,4 +27,7 @@ export const createInputInstance = (manager: Manager) => {
   return new (Type)(manager, inputHandler);
 };
 
+export * from './abstract';
 export * from './util';
+export * from './types';
+export * from './constants';

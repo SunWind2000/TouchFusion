@@ -1,8 +1,37 @@
-import type { ManagerOptions, RECOGNIZER_TYPE, STOP_TYPE } from '@/constants';
-import type { InputData, SimpleInputData } from './input';
-import type { Recognizer } from '@/recognizer';
-import type { TouchAction } from '@/touch-action';
-import type { Point2D } from './base';
+import type { Recognizer, RECOGNIZER_TYPE } from '@/recognizer';
+import type { InputData, SimpleInputData, Point2D } from '@/input';
+import type { STOP_TYPE } from './constants';
+
+export const ACTIONS = [
+  'none',
+  'pan-x',
+  'pan-y',
+  'auto',
+  'manipulation',
+  'compute'
+] as const;
+
+export type IActions = typeof ACTIONS[number];
+
+export interface IManagerOptions {
+  domEvents?: boolean;
+  touchActions?: IActions[];
+  /**
+   * 是否阻止所有input事件的默认行为
+   */
+  preventDefault?: boolean;
+  /**
+   * 是否阻止所有input事件冒泡
+   */
+  stopPropagation?: boolean;
+  /**
+   * 是否阻止所有input事件立即停止
+   */
+  stopImmediatePropagation?: boolean;
+  enable?: boolean;
+  inputTarget?: Element | null;
+  cssProps?: Partial<CSSStyleDeclaration>;
+}
 
 export interface IManagerSession {
   prevented: boolean;
@@ -29,7 +58,7 @@ export interface IManager {
   /**
    * @description 事件配置.
    */
-  options: ManagerOptions;
+  options: IManagerOptions;
   /**
    * @description 识别器列表.
    */
@@ -39,10 +68,6 @@ export interface IManager {
    */
   session: IManagerSession;
   /**
-   * @description 触摸事件.
-   */
-  touchAction: TouchAction;
-  /**
    * @description 停止事件.
    * @param force 是否强制停止.
    */
@@ -51,7 +76,7 @@ export interface IManager {
    * @description 设置事件配置.
    * @param options 事件配置.
    */
-  set: (options: ManagerOptions) => void;
+  set: (options: IManagerOptions) => void;
   /**
    * @description 获取识别器.
    * @param recognizer 识别器名称

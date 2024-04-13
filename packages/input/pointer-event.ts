@@ -1,5 +1,5 @@
 import { AbstractInput } from './abstract';
-import { INPUT_STATE, INPUT_TYPE } from '@/constants';
+import { INPUT_STATE, INPUT_TYPE } from './constants';
 
 import type { Manager } from '@/manager';
 import type { InputCallback } from './abstract';

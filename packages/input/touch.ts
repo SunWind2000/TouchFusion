@@ -1,10 +1,9 @@
 import { AbstractInput } from './abstract';
-import { INPUT_STATE, INPUT_TYPE } from '@/constants';
-import { uniqueArray } from '@/utils';
+import { INPUT_STATE, INPUT_TYPE } from './constants';
+import { uniqueArray, hasParentNode } from '@/utils';
 
 import type { Manager } from '@/manager';
 import type { InputCallback } from './abstract';
-import { hasParentNode } from '@/utils';
 
 const TOUCH_INPUT_MAP = {
   touchstart: INPUT_STATE.Start,

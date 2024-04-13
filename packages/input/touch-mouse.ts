@@ -1,12 +1,12 @@
-import { INPUT_STATE, INPUT_TYPE} from '@/constants';
 import { bindFn } from '@/utils';
+import { INPUT_STATE, INPUT_TYPE} from './constants';
 import { MouseInput } from './mouse';
 import { TouchInput } from './touch';
 import { AbstractInput } from './abstract';
 
 import type { Manager } from '@/manager';
-import type { InputData, Point2D } from '@/types';
 import type { InputCallback } from './abstract';
+import type { InputData, Point2D } from './types';
 
 const DEDUP_TIMEOUT = 2500;
 const DEDUP_DISTANCE = 25;

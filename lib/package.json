@@ -1,7 +1,0 @@
-{
-  "name": "@touch-fusion/lib",
-  "private": true,
-  "license": "MIT",
-  "main": "touch-fusion.js",
-  "version": "0.0.3"
-}

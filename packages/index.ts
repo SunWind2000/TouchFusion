@@ -1,13 +1,9 @@
-import * as Constants from './constants/index';
-import * as Types from './types/index';
-import * as Utils from './utils/index';
-import * as Recognizer from './recognizer/index';
-import { Manager } from './manager';
+import { Manager as FsTouchManager } from '@/manager';
+import * as FsTouchRecognizer from '@/recognizer';
+import * as FsTouchInput from '@/input';
 
-export default {
-  Manager,
-  Constants,
-  Types,
-  Utils,
-  Recognizer
+export {
+  FsTouchManager,
+  FsTouchRecognizer,
+  FsTouchInput
 };
