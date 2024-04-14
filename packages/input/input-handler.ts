@@ -28,7 +28,7 @@ export const inputHandler = (
   eventData.isFirst = !!isFirst;
   eventData.isFinal = !!isFinal;
 
-  if (isFirst) {
+  if (eventData.isFirst) {
     manager.clearSession();
   }
 

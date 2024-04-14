@@ -86,3 +86,18 @@ export class InputUtil {
     };
   }
 }
+
+export const getDirectionStr = (direction: DIRECTION): string => {
+  switch (direction) {
+    case DIRECTION.Down:
+      return 'down';
+    case DIRECTION.Left:
+      return 'left';
+    case DIRECTION.Right:
+      return 'right';
+    case DIRECTION.Up:
+      return 'up';
+  }
+
+  return '';
+};

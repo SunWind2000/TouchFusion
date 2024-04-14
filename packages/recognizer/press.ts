@@ -6,14 +6,17 @@ import type { IActions } from '@/manager';
 import type { InputData } from '@/input';
 import type { IRecognizerOptions } from './types';
 
-type PressIRecognizerOptions  = Partial<Pick<
+type IPressRecognizerOptions  = Partial<Pick<
   IRecognizerOptions, 
   'threshold' | 'pointers' | 'time'
 >>;
 
+/**
+ * Recognized when the pointer is down for x ms without any movement.
+ */
 export class PressRecognizer extends Recognizer {
 
-  public static readonly defaults: PressIRecognizerOptions = {
+  public static readonly defaults: IPressRecognizerOptions = {
     threshold: 9,
     pointers: 1,
     time: 251
@@ -23,7 +26,7 @@ export class PressRecognizer extends Recognizer {
 
   private _isRecognized: boolean = false;
 
-  constructor(options: PressIRecognizerOptions = {}) {
+  constructor(options: IPressRecognizerOptions = {}) {
     super({
       ...PressRecognizer.defaults,
       ...options
@@ -35,7 +38,7 @@ export class PressRecognizer extends Recognizer {
     return ['auto'];
   }
 
-  public process(inputData: InputData) {
+  protected process(inputData: InputData) {
 
     const validPointers = inputData.pointers!.length === this.options.pointers;
     const validMovement = inputData.distance! < this.options.threshold!;

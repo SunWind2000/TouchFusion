@@ -36,6 +36,10 @@ export abstract class AbstractInput {
     this._evTarget = value;
   }
 
+  set target(value: EventTarget | null) {
+    this._target = value;
+  }
+
   constructor(manager: Manager, callback: InputCallback) {
     this._manager = manager;
     this.el = manager.element;

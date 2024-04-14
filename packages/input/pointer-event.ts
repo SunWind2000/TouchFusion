@@ -12,7 +12,7 @@ const POINTER_EVENT_INPUT_MAP = {
   pointerout: INPUT_STATE.Cancel
 };
 const POINTER_ELEMENT_EVENTS = ['pointerdown'];
-const POINTER_WINDOW_EVENTS = ['pointermove', 'pointerup', 'pointercancel', 'pointerout'];
+const POINTER_WINDOW_EVENTS = ['pointermove', 'pointerup', 'pointercancel'];
 
 export class PointerEventInput extends AbstractInput {
 
@@ -35,7 +35,7 @@ export class PointerEventInput extends AbstractInput {
 
       // start and mouse must be down
       if (
-        eventType === INPUT_STATE.Start &&
+        (eventType & INPUT_STATE.Start) &&
         (ev.button === 0 || isTouch)
       ) {
         if (storeIndex === -1) {
@@ -43,8 +43,7 @@ export class PointerEventInput extends AbstractInput {
           storeIndex = this._store.length - 1;
         }
       } else if (
-        eventType === INPUT_STATE.End ||
-        eventType === INPUT_STATE.Cancel
+        eventType & (INPUT_STATE.End | INPUT_STATE.Cancel)
       ) {
         shouldRemovePointer = true;
       }

@@ -1,7 +1,7 @@
 import type { DIRECTION, InputData } from '@/input';
 import type { IActions } from '@/manager';
 import type { Recognizer } from '../abstract';
-import type { RECOGNIZER_STATE, RECOGNIZER_TYPE } from '../constants';
+import type { RECOGNIZER_TYPE } from '../constants';
 
 export interface IRecognizerOptions {
   /**
@@ -44,6 +44,5 @@ export interface IRecognizer {
   dropRequireFailure: (recognizer: Recognizer | Recognizer[]) => Recognizer;
   recognize: (data: InputData) => void;
   reset: () => void;
-  process: (inputData: InputData) => RECOGNIZER_STATE;
 }
 

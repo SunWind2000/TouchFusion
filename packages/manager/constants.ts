@@ -14,8 +14,7 @@ export const DEFAULT_OPTIONS: IManagerOptions = {
   stopImmediatePropagation: false,
   inputTarget: null,
   cssProps: {
-    userSelect: 'none',
-    touchAction: 'none'
+    userSelect: 'none'
   }
 };
 

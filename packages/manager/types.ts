@@ -1,6 +1,7 @@
 import type { Recognizer, RECOGNIZER_TYPE } from '@/recognizer';
 import type { InputData, SimpleInputData, Point2D } from '@/input';
 import type { STOP_TYPE } from './constants';
+import type { TouchAction } from './touch-action';
 
 export const ACTIONS = [
   'none',
@@ -67,6 +68,7 @@ export interface IManager {
    * @description 事件状态.
    */
   session: IManagerSession;
+  touchAction: TouchAction;
   /**
    * @description 停止事件.
    * @param force 是否强制停止.

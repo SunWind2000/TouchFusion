@@ -2,6 +2,7 @@ import { Recognizer, RECOGNIZER_STATE, RECOGNIZER_TYPE } from '@/recognizer';
 import { createInputInstance } from '@/input';
 import { each } from '@/utils';
 import { DEFAULT_OPTIONS, STOP_TYPE } from './constants';
+import { TouchAction } from './touch-action';
 
 import type { AbstractInput, InputData } from '@/input';
 import type { IManagerOptions, IManager, IManagerSession } from './types';
@@ -13,6 +14,7 @@ export class Manager implements IManager {
   private _session: IManagerSession;
   private _input: AbstractInput;
   private _oldCssProps: Record<string, any>;
+  private _touchAction: TouchAction;
   private handlers: Record<RECOGNIZER_TYPE, (data: InputData) => unknown>;
   
   constructor(element: HTMLElement, options?: IManagerOptions) {
@@ -27,6 +29,8 @@ export class Manager implements IManager {
     this._session = {} as IManagerSession;
 
     this.handlers = {} as Record<RECOGNIZER_TYPE, (data: InputData) => unknown>;
+
+    this._touchAction = new TouchAction(this, this._options.touchActions);
 
     this._oldCssProps = {};
     this._toggleCssProps('add');
@@ -48,12 +52,27 @@ export class Manager implements IManager {
     return this._session;
   }
 
+  get touchAction(): TouchAction {
+    return this._touchAction;
+  }
+
   public stop(force: boolean): void {
     this._session.stopped = force ? STOP_TYPE.ForceStop : STOP_TYPE.Stop;
   }
 
-  public set(options: IManagerOptions): void {
+  public set(options: IManagerOptions): Manager {
     this._options = { ...this._options, ...options };
+
+    if (options.touchActions) {
+      this._touchAction.update();
+    }
+    if (options.inputTarget) {
+      this._input.destroy();
+      this._input.target = options.inputTarget;
+      this._input.init();
+    }
+
+    return this;
   }
 
   public get(recognizer: RECOGNIZER_TYPE): Recognizer | null {
@@ -101,10 +120,12 @@ export class Manager implements IManager {
       return;
     }
 
+    this.touchAction.preventDefault(input);
+
     let { curRecognizer } = this._session;
     if (
       !curRecognizer || 
-      (curRecognizer && curRecognizer.state === RECOGNIZER_STATE.Ended)
+      (curRecognizer && (curRecognizer.state & RECOGNIZER_STATE.Ended))
     ) {
       curRecognizer = this._session.curRecognizer = null;
     }

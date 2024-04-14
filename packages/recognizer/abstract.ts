@@ -2,7 +2,7 @@ import { INPUT_STATE } from '@/input';
 import { RECOGNIZER_TYPE, RECOGNIZER_STATE } from './constants';
 import { generateId, invokeArrayArg, isArray } from '@/utils';
 
-import type { InputData } from '@/input';
+import { InputData } from '@/input';
 import type { IActions, IManager } from '@/manager';
 import type { IRecognizer, IRecognizerOptions } from './types';
 
@@ -56,7 +56,7 @@ export abstract class Recognizer implements IRecognizer {
 
   public set(options: IRecognizerOptions) {
     this._options = { ...this._options, ...options };
-    // this._manager?.touchAction.update();
+    this._manager?.touchAction.update();
   }
 
   public canRecognizeWith(otherRecognizer: Recognizer): boolean {
@@ -180,7 +180,7 @@ export abstract class Recognizer implements IRecognizer {
 
   public abstract reset(): void;
 
-  public abstract process(inputData: InputData): RECOGNIZER_STATE;
+  protected abstract process(inputData: InputData): RECOGNIZER_STATE;
 
   private getRecognizerByNameIfManager(otherRecognizer: Recognizer, recognizer: Recognizer) {
     if (recognizer.manager) {
@@ -207,7 +207,7 @@ export abstract class AttrRecognizer extends Recognizer {
     this.state = RECOGNIZER_STATE.Possible;
   }
 
-  public process(inputData: InputData): RECOGNIZER_STATE {
+  protected process(inputData: InputData): RECOGNIZER_STATE {
     const { eventType } = inputData;
 
     const isRecognized = this.state & (RECOGNIZER_STATE.Began | RECOGNIZER_STATE.Changed);

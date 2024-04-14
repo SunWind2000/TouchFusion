@@ -1,5 +1,5 @@
 import type { RECOGNIZER_TYPE } from '@/recognizer';
-import type { INPUT_STATE, INPUT_TYPE } from '../constants';
+import type { DIRECTION, INPUT_STATE, INPUT_TYPE } from '../constants';
 
 export interface Point2D {
   x: number;
@@ -34,7 +34,7 @@ export interface InputData {
   /**
    * 手势偏移方向.
    */
-  offsetDirection?: number;
+  offsetDirection?: DIRECTION;
   /**
    * 手势滑动方向.
    */

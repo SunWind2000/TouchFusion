@@ -21,6 +21,9 @@ export class TouchAction {
    * @param value touchActions of browser supported
    */
   public set(value: IActions[]) {
+    if (value.includes('compute')) {
+      value = this._compute();
+    }
     const touchAction = value.join(' ');
     this.manager.element.style.touchAction = touchAction.toLowerCase().trim();
   }
@@ -34,23 +37,6 @@ export class TouchAction {
         ...this.manager.options.touchActions
       ]);
     }
-  }
-
-  /**
-   * @description compute the touchAction value based on the recognizer's settings
-   * @returns value of touchAction
-   */
-  public compute() {
-    let actions: IActions[] = []; 
-    this.manager.recognizers.forEach((recognizer: IRecognizer) => {
-      if (
-        isBoolean(recognizer.options.enable) &&
-        recognizer.options.enable
-      ) {
-        actions = actions.concat(recognizer.getTouchAction());
-      }
-    });
-    return this.cleanTouchActions(actions);
   }
 
   /**
@@ -86,11 +72,28 @@ export class TouchAction {
 
     if (
       hasNone ||
-      (hasPanX && direction === DIRECTION_HORIZONTAL) ||
-      (hasPanY && direction === DIRECTION_VERTICAL)
+      (hasPanX && (direction! & DIRECTION_HORIZONTAL)) ||
+      (hasPanY && (direction! & DIRECTION_VERTICAL))
     ) {
-      return this.preventSrc(srcEvent!);
+      this._preventSrc(srcEvent!);
     }
+  }
+
+  /**
+   * @description compute the touchAction value based on the recognizer's settings
+   * @returns value of touchAction
+   */
+  private _compute() {
+    let actions: IActions[] = []; 
+    this.manager.recognizers.forEach((recognizer: IRecognizer) => {
+      if (
+        isBoolean(recognizer.options.enable) &&
+        recognizer.options.enable
+      ) {
+        actions = actions.concat(recognizer.getTouchAction());
+      }
+    });
+    return this._cleanTouchActions(actions);
   }
 
   /**
@@ -98,25 +101,25 @@ export class TouchAction {
    * @param actions actions of user defined
    * @returns 
    */
-  private cleanTouchActions(actions: IActions[]) {
+  private _cleanTouchActions(actions: IActions[]): IActions[] {
     if (actions.includes('none')) {
-      return 'none';
+      return ['none'];
     }
 
     const hasPanX = actions.includes('pan-x');
     const hasPanY = actions.includes('pan-y');
     if (hasPanX && hasPanY) {
-      return 'none';
+      return ['none'];
     }
     if (hasPanX || hasPanY) {
-      return hasPanX ? 'pan-x' : 'pan-y';
+      return hasPanX ? ['pan-x'] : ['pan-y'];
     }
 
     if (actions.includes('manipulation')) {
-      return 'manipulation';
+      return ['manipulation'];
     }
 
-    return 'auto';
+    return ['auto'];
   }
 
   /**
@@ -124,7 +127,7 @@ export class TouchAction {
    * @description call preventDefault to prevent the browser's default behavior (scrolling in most cases)
    * @param srcEvent 
    */
-  private preventSrc(srcEvent: Event) {
+  private _preventSrc(srcEvent: Event) {
     this.manager.session.prevented = true;
     srcEvent.preventDefault();
   }
