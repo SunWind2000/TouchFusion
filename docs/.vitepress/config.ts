@@ -35,9 +35,9 @@ export default defineConfig({
         items: [
           { text: 'Press 长按', link: '/guide/recognizer/press' },
           { text: 'Pan 拖拽', link: '/guide/recognizer/pan' },
+          { text: 'Swipe 滑动', link: '/guide/recognizer/swipe' },
           { text: 'Pinch 缩放', link: '/guide/recognizer/pinch' },
           { text: 'Rotate 旋转', link: '/guide/recognizer/rotate' },
-          { text: 'Swipe 滑动', link: '/guide/recognizer/swipe' },
           { text: 'Tap 点击', link: '/guide/recognizer/tap' },
         ]
       },

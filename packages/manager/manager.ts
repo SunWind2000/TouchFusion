@@ -1,4 +1,12 @@
-import { Recognizer, RECOGNIZER_STATE, RECOGNIZER_TYPE } from '@/recognizer';
+import {
+  Recognizer,
+  RECOGNIZER_STATE,
+  RECOGNIZER_TYPE,
+  PressRecognizer,
+  PanRecognizer,
+  SwipeRecognizer,
+  IRecognizerOptions
+} from '@/recognizer';
 import { createInputInstance } from '@/input';
 import { each } from '@/utils';
 import { DEFAULT_OPTIONS, STOP_TYPE } from './constants';
@@ -60,6 +68,15 @@ export class Manager implements IManager {
     this._session.stopped = force ? STOP_TYPE.ForceStop : STOP_TYPE.Stop;
   }
 
+  /**
+   * 获取当前管理器中的指定识别器
+   * @param recognizer 
+   * @returns 
+   */
+  public get(recognizer: RECOGNIZER_TYPE): Recognizer | null {
+    return this._recognizers.find((item) => item.type === recognizer) || null;
+  }
+
   public set(options: IManagerOptions): Manager {
     this._options = { ...this._options, ...options };
 
@@ -75,32 +92,83 @@ export class Manager implements IManager {
     return this;
   }
 
-  public get(recognizer: RECOGNIZER_TYPE): Recognizer | null {
-    return this._recognizers.find((item) => item.type === recognizer) || null;
+  /**
+   * 给指定的识别器设置配置项
+   * @param type 识别器类型
+   * @param options 对应识别器配置
+   * @returns 若设置成功则返回对英国识别器，若设置失败则返回 null
+   */
+  public setOptions(type: RECOGNIZER_TYPE, options: IRecognizerOptions): Recognizer | null {
+    const recognizer = this.get(type);
+    if (recognizer) {
+      recognizer.set(options);
+    }
+    return recognizer;
   }
 
-  public add(recognizer: Recognizer): void {
+  /**
+   * 添加一个具有自定义配置的识别器覆盖默认识别器
+   * @param recognizer 
+   * @returns 当前存在的识别器列表
+   */
+  public add(recognizer: Recognizer): Recognizer[] {
     recognizer.manager = this;
-    this._recognizers.push(recognizer);
-  }
-
-  public remove(recognizer: Recognizer): void {
+    // 只能保留有一个同类型的识别器
     const index = this._recognizers.findIndex((item) => item.type === recognizer.type);
     if (index > -1) {
       this._recognizers.splice(index, 1);
     }
+    this._recognizers.push(recognizer);
+    this._touchAction.update();
+    return this._recognizers;
   }
 
+  /**
+   * 移除识别器，并更新当前元素绑定的touchAction
+   * @param recognizer 
+   * @returns 
+   */
+  public remove(recognizer: Recognizer): Recognizer[] {
+    const index = this._recognizers.findIndex((item) => item.type === recognizer.type);
+    if (index > -1) {
+      this._recognizers.splice(index, 1);
+    }
+    this._touchAction.update();
+    return this._recognizers;
+  }
+
+  /**
+   * 监听手势事件，当识别器识别到对应的手势时触发
+   * 如果在此之前没有配置过自定义识别器，调用该方法会给管理器配置一个对应手势的默认识别器
+   * @param recognizer 
+   * @param handler 
+   */
   public on(recognizer: RECOGNIZER_TYPE, handler: (data: InputData) => unknown): void {
+    // 如果没有该识别器，则使用默认配置预设
+    if (!this.get(recognizer)) {
+      this._presetRecognizers(recognizer);
+    }
     this.handlers[recognizer] = handler;
   }
 
+  /**
+   * 移除手势事件监听，同时移除对应的识别器
+   * @param recognizer 
+   */
   public off(recognizer: RECOGNIZER_TYPE[]): void {
     recognizer.forEach((item) => {
       delete this.handlers[item];
+      // 同时移除识别器
+      const rec = this.get(item);
+      if (rec) {
+        this.remove(rec);
+      }
     });
   }
 
+  /**
+   * 销毁管理器，同时移除元素上的事件监听器，以及绑定的CSS属性
+   */
   public destroy(): void { 
     this._toggleCssProps('remove');
     this._recognizers = [];
@@ -151,7 +219,7 @@ export class Manager implements IManager {
   }
 
   /**
-   * Emit event. Called by the recognizer when it recognizes the input.
+   * 由各个识别器调用，触发对应的手势事件回调
    * @param type Touch event type
    * @param input input data
    */
@@ -168,6 +236,9 @@ export class Manager implements IManager {
     }
   }
 
+  /**
+   * 清空当前管理器的session
+   */
   public clearSession(): void {
     this._session = {} as IManagerSession;
   }
@@ -186,6 +257,22 @@ export class Manager implements IManager {
     });
     if (action !== 'add') {
       this._oldCssProps = {};
+    }
+  }
+
+  private _presetRecognizers(type: RECOGNIZER_TYPE) {
+    switch (type) {
+      case RECOGNIZER_TYPE.Press:
+        this.add(new PressRecognizer());
+        break;
+      case RECOGNIZER_TYPE.Pan:
+        this.add(new PanRecognizer());
+        break;
+      case RECOGNIZER_TYPE.Swipe:
+        this.add(new SwipeRecognizer());
+        break;
+      default:
+        break;
     }
   }
 }
