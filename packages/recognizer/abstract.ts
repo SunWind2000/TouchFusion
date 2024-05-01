@@ -9,19 +9,17 @@ import type { IRecognizer, IRecognizerOptions } from './types';
 export abstract class Recognizer implements IRecognizer {
   protected _type: RECOGNIZER_TYPE = RECOGNIZER_TYPE.Unknown;
   protected _manager: IManager | null;
-  private _id: string;
-  private _state: RECOGNIZER_STATE;
+  private _id: string = '';
+  private _state: RECOGNIZER_STATE = RECOGNIZER_STATE.Possible;
   private _options: IRecognizerOptions;
   private simultaneous: Record<string, Recognizer>;
   private requireFails: Recognizer[];
 
   constructor(options: IRecognizerOptions) {
     this._options = { ...options };
-    this._id = generateId(this.type);
     this._manager = null;
 
     this._options.enable = this._options.enable ?? true;
-    this._state = RECOGNIZER_STATE.Possible;
     this.simultaneous = {};
     this.requireFails = [];
   }
@@ -52,6 +50,12 @@ export abstract class Recognizer implements IRecognizer {
 
   set manager(manager: IManager) {
     this._manager = manager;
+  }
+
+  protected init(type: RECOGNIZER_TYPE) {
+    this._state = RECOGNIZER_STATE.Possible;
+    this._type = type;
+    this._id = generateId(this._type);
   }
 
   public set(options: IRecognizerOptions) {

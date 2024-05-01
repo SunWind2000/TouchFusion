@@ -18,9 +18,7 @@ const getDirectionStr = FsTouchInput.getDirectionStr
 onMounted(() => {
   // 禁用右键菜单
   detectRef.value!.oncontextmenu = () => false
-  const manager = new FsTouchManager(detectRef.value!, {
-    touchActions: ['none']
-  })
+  const manager = new FsTouchManager(detectRef.value!)
   const recognizer = new FsTouchRecognizer.PanRecognizer()
   manager.add(recognizer)
   manager.on(FsTouchRecognizer.RECOGNIZER_TYPE.Pan, (e) => {

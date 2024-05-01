@@ -28,7 +28,7 @@ export class SwipeRecognizer extends AttrRecognizer {
       ...SwipeRecognizer.defaults,
       ...options
     });
-    this._type = RECOGNIZER_TYPE.Swipe;
+    this.init(RECOGNIZER_TYPE.Swipe);
   }
 
   public getTouchAction(): IActions[] {

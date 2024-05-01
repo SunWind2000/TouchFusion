@@ -30,10 +30,10 @@ export class PanRecognizer extends AttrRecognizer {
       ...PanRecognizer.defaults,
       ...options
     });
-    this._type = RECOGNIZER_TYPE.Pan;
 
     this._dX = null;
     this._dY = null;
+    this.init(RECOGNIZER_TYPE.Pan);
   }
 
   public getTouchAction() {

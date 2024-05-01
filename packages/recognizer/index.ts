@@ -4,3 +4,4 @@ export * from './types';
 export * from './press';
 export * from './pan';
 export * from './swipe';
+export * from './pinch';

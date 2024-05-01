@@ -37,9 +37,7 @@ onMounted(() => {
   draggableBlockRef.value!.style.top = `${originTop.value}px`
   // 禁用右键菜单
   draggableBlockRef.value!.oncontextmenu = () => false
-  const manager = new FsTouchManager(draggableBlockRef.value!, {
-    touchActions: ['none']
-  })
+  const manager = new FsTouchManager(draggableBlockRef.value!)
   const recognizer = new FsTouchRecognizer.PanRecognizer()
   manager.add(recognizer)
   manager.on(FsTouchRecognizer.RECOGNIZER_TYPE.Pan, (e) => {

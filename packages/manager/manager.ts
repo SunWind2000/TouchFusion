@@ -5,6 +5,7 @@ import {
   PressRecognizer,
   PanRecognizer,
   SwipeRecognizer,
+  PinchRecognizer,
   IRecognizerOptions
 } from '@/recognizer';
 import { createInputInstance } from '@/input';
@@ -270,6 +271,9 @@ export class Manager implements IManager {
         break;
       case RECOGNIZER_TYPE.Swipe:
         this.add(new SwipeRecognizer());
+        break;
+      case RECOGNIZER_TYPE.Pinch:
+        this.add(new PinchRecognizer());
         break;
       default:
         break;

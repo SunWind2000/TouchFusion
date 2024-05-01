@@ -31,7 +31,7 @@ export class PressRecognizer extends Recognizer {
       ...PressRecognizer.defaults,
       ...options
     });
-    this._type = RECOGNIZER_TYPE.Press;
+    this.init(RECOGNIZER_TYPE.Press);
   }
 
   public getTouchAction(): IActions[] {
