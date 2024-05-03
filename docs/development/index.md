@@ -4,7 +4,7 @@
 
 ## 使用指南
 
-详细使用文档参见：[https://sunhy-cn.gitee.io/touch-fusion/](https://sunhy-cn.gitee.io/touch-fusion/)
+详细使用文档参见：[https://sunwind2000.github.io/touch-fusion/](https://sunwind2000.github.io/touch-fusion/)
 
 ## 开发指南
 

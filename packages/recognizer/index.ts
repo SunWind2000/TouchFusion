@@ -5,3 +5,4 @@ export * from './press';
 export * from './pan';
 export * from './swipe';
 export * from './pinch';
+export * from './rotate';

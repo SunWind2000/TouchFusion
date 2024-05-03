@@ -3,7 +3,7 @@ import { RECOGNIZER_STATE, RECOGNIZER_TYPE } from './constants';
 
 import type { IActions } from '@/manager';
 import type { IRecognizerOptions } from './types';
-import { InputData } from '@/input';
+import type { InputData } from '@/input';
 
 type IPinchRecognizerOptions = Partial<Pick<
   IRecognizerOptions,

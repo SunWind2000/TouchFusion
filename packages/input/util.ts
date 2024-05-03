@@ -5,13 +5,18 @@ import type { Point2D } from './types';
 export class InputUtil {
 
   /**
-   * 计算从起始点到终点的角度
+   * 计算两点相对于X轴正向的夹脚
    * @param p1 
    * @param p2 
    * @returns 
    */
   public static getAngle(p1: Point2D, p2: Point2D): number {
-    return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+    // 在X轴的投影长度
+    const dx = p2.x - p1.x;
+    // 计算弧度角
+    const radian = Math.atan2(p2.y - p1.y, dx);
+    // 弧度转角度
+    return radian * 180 / Math.PI;
   }
 
   /**
@@ -55,12 +60,12 @@ export class InputUtil {
 
   /**
    * 计算旋转角度
-   * @param starts 
-   * @param ends 
+   * @param starts 触摸起始点坐标
+   * @param ends 触摸结束点坐标
    * @returns 
    */
   public static getRotation(starts: Point2D[], ends: Point2D[]): number {
-    return this.getAngle(ends[1], ends[0]) + this.getAngle(starts[1], starts[0]);
+    return this.getAngle(ends[1], ends[0]) - this.getAngle(starts[1], starts[0]);
   }
 
   /**
