@@ -123,6 +123,10 @@ export interface InputData {
    * 是否阻止默认事件.
    */
   preventDefault?: () => void;
+  /**
+   * tap事件触发次数.
+   */
+  tapCount?: number;
 }
 
 export type SimpleInputData = Pick<

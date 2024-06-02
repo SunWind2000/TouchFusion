@@ -28,6 +28,18 @@ export interface IRecognizerOptions {
    * @description 识别手势的最小时间，单位ms.
    */
   time?: number;
+  /**
+   * @description 两次手势动作触发的间隔，单位ms.
+   */
+  interval?: number;
+  /**
+   * @description tap事件触发的次数.
+   */
+  taps?: number;
+  /**
+   * @description 多次点击时允许的最小位移.
+   */
+  posThreshold?: number;
 }
 
 export interface IRecognizer {

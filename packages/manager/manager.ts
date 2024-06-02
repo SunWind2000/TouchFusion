@@ -7,6 +7,7 @@ import {
   SwipeRecognizer,
   PinchRecognizer,
   RotateRecognizer,
+  TapRecognizer,
   IRecognizerOptions
 } from '@/recognizer';
 import { createInputInstance } from '@/input';
@@ -278,6 +279,9 @@ export class Manager implements IManager {
         break;
       case RECOGNIZER_TYPE.Rotate:
         this.add(new RotateRecognizer());
+        break;
+      case RECOGNIZER_TYPE.Tap:
+        this.add(new TapRecognizer());
         break;
       default:
         break;
